@@ -4,12 +4,13 @@ import com.example.objectorientedcoffeeshop.domain.id.IdGenerator;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class OrderIdSpec {
     @Test
     public void 주문_ID를_만들어보기() {
         OrderId orderId = new OrderId();
-        System.out.println(orderId);
+        assertNotNull(orderId);
     }
 
     @Test

@@ -18,26 +18,21 @@ public class OrderSpec {
 
     @Test
     public void 주문은_주문번호를_가지고_있다() {
-        Menu menu = new Menu(Arrays.asList(new Item("아메리카노", 1500),
-                new Item("카페라떼", 2000),
-                new Item("카페모카", 2500),
-                new Item("유자차", 3500)));
-        Order order = new Order(menu);
+        Order order = new Order();
         assertNotNull(order.id());
-        System.out.println("주문번호 : " + order.id());
-
     }
+
     @Test
-    public void 손님은_메뉴판을_보고_주문을_생성한다() {
+    public void 주문을_생성한다() {
         Menu menu = new Menu(Arrays.asList(new Item("아메리카노", 1500),
                 new Item("카페라떼", 2000),
                 new Item("카페모카", 2500),
                 new Item("유자차", 3500)));
 
-        Order order = new Order(menu);
-        order.add("아메리카노", 3);
-        order.add("카페모카", 2);
-        order.add("유자차", 1);
+        Order order = new Order();
+        order.add(menu.find("아메리카노"), 3);
+        order.add(menu.find("카페모카"), 2);
+        order.add(menu.find("유자차"), 1);
 
         assertEquals(6, order.totalQuantities());
         assertEquals(13000, order.totalPrice());

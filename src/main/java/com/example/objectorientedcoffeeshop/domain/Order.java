@@ -1,23 +1,22 @@
 package com.example.objectorientedcoffeeshop.domain;
 
-import lombok.NonNull;
-import lombok.Value;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Value
+@EqualsAndHashCode
+@ToString
 public class Order {
     private OrderId id;
-    private final Menu menu;
     private final List<OrderItem> orderItems = new ArrayList<>();
-    public Order(@NonNull final Menu menu) {
+    public Order() {
         this.id = new OrderId();
-        this.menu = menu;
     }
 
-    public void add(String menuName, int quantity) {
-        this.orderItems.add(new OrderItem(menu.find(menuName), quantity));
+    public void add(Item item, int quantity) {
+        this.orderItems.add(new OrderItem(item, quantity));
     }
 
     public int totalQuantities() {

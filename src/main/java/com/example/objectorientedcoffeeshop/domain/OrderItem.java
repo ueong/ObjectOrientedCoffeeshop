@@ -1,8 +1,10 @@
 package com.example.objectorientedcoffeeshop.domain;
 
-import lombok.Value;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-@Value
+@EqualsAndHashCode
+@ToString
 public class OrderItem {
     private final Item item;
     private final int quantity;
