@@ -1,17 +1,12 @@
 package com.example.objectorientedcoffeeshop.domain;
 
-import lombok.EqualsAndHashCode;
 import lombok.NonNull;
-import lombok.ToString;
-import lombok.Value;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@EqualsAndHashCode
-@ToString
 public class Menu {
     private final Map<String, Item> menuItems = new HashMap<>();
     public Menu(@NonNull final List<Item> items) {

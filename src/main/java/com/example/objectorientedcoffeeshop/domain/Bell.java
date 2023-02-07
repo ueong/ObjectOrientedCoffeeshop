@@ -1,8 +1,8 @@
 package com.example.objectorientedcoffeeshop.domain;
 
-public class Notification {
+public class Bell {
     private final Customer customer;
-    public Notification(Customer customer) {
+    public Bell(Customer customer) {
         this.customer = customer;
     }
 
@@ -11,6 +11,6 @@ public class Notification {
     }
 
     public void notifyCustomer(Clerk clerk) {
-        this.customer.notified(clerk);
+        this.customer.onDrinkReady(clerk);
     }
 }

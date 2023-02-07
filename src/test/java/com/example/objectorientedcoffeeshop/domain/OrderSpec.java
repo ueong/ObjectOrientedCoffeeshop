@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class OrderSpec {
     @Test
@@ -14,12 +13,6 @@ public class OrderSpec {
         assertEquals("아메리카노", orderItem.name());
         assertEquals(3, orderItem.quantity());
         assertEquals(4500, orderItem.price());
-    }
-
-    @Test
-    public void 주문은_주문번호를_가지고_있다() {
-        Order order = new Order();
-        assertNotNull(order.id());
     }
 
     @Test

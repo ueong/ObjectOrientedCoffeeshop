@@ -9,11 +9,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class Order {
-    private OrderId id;
     private final List<OrderItem> orderItems = new ArrayList<>();
-    public Order() {
-        this.id = new OrderId();
-    }
 
     public void add(Item item, int quantity) {
         this.orderItems.add(new OrderItem(item, quantity));
@@ -29,9 +25,5 @@ public class Order {
 
     public List<OrderItem> items() {
         return this.orderItems;
-    }
-
-    public OrderId id() {
-        return this.id;
     }
 }

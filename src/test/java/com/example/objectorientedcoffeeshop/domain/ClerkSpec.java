@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,10 +23,10 @@ public class ClerkSpec {
         customer1.choose(menu, "유자차", 1);
 
         // when
-        Notification notification = clerk.order(customer1);
+        Bell bell = clerk.order(customer1);
 
         // then
-        assertEquals(customer1, notification.customer());
+        assertEquals(customer1, bell.customer());
         assertEquals(customer1.myOrder(), barista.orders.get(0));
     }
 
@@ -44,14 +46,29 @@ public class ClerkSpec {
         customer2.choose(menu, "유자차", 1);
 
         // when
-        Notification notification1 = clerk.order(customer1);
-        Notification notification2 = clerk.order(customer2);
+        Bell bell1 = clerk.order(customer1);
+        Bell bell2 = clerk.order(customer2);
 
         // then
-        assertEquals(customer1, notification1.customer());
-        assertEquals(customer2, notification2.customer());
+        assertEquals(customer1, bell1.customer());
+        assertEquals(customer2, bell2.customer());
         assertEquals(customer1.myOrder(), barista.orders.get(0));
         assertEquals(customer2.myOrder(), barista.orders.get(1));
+    }
+
+    @Test
+    public void 점원은_손님에게_완성된_음료를_전달한다() {
+        // given
+        TestBarista barista = new TestBarista();
+        barista.drinks = Arrays.asList(new Drink("아메리카노"), new Drink("아메리카노"), new Drink("아메리카노"));
+        Clerk clerk = new Clerk(barista);
+        Menu menu = getMenu();
+        Customer customer1 = new Customer();
+        customer1.choose(menu, "아메리카노", 3);
+        Bell bell1 = clerk.order(customer1);
+
+        List<Drink> drinks = clerk.getDrinksFor(customer1);
+        assertEquals(barista.drinks, drinks);
     }
 
     private Menu getMenu() {
@@ -63,10 +80,18 @@ public class ClerkSpec {
     }
     public static class TestBarista extends Barista {
         public List<Order> orders = new ArrayList<>();
+        public List<Drink> drinks = new ArrayList<>();
 
         @Override
         public void makeDrinkFor(Order order, Clerk clerk) {
             this.orders.add(order);
+            clerk.onCompleted(order);
         }
+
+        @Override
+        public List<Drink> getDrinkFor(Order order) {
+            return this.drinks;
+        }
+
     }
 }

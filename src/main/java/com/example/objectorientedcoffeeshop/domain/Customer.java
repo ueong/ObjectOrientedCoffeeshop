@@ -1,21 +1,15 @@
 package com.example.objectorientedcoffeeshop.domain;
 
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import java.util.List;
 
 @EqualsAndHashCode
 public class Customer {
-    private final CustomerId id;
     private final Order myOrder;
 
     public Customer() {
-        this.id = new CustomerId();
         this.myOrder = new Order();
-    }
-    public CustomerId id() {
-        return this.id;
     }
 
     public void choose(Menu menu, String menuName, int quantity) {
@@ -30,13 +24,13 @@ public class Customer {
         clerk.order(this);
     }
 
-    public void notified(Clerk clerk) {
+    public void onDrinkReady(Clerk clerk) {
         List<Drink> drinks = takeDrinkFrom(clerk);
-        drinks.stream().forEach(drink -> drink.taste());
+        drinks.forEach(Drink::taste);
     }
 
     private List<Drink> takeDrinkFrom(Clerk clerk) {
-        return clerk.deliverOrderedDrinks(this);
+        return clerk.getDrinksFor(this);
     }
 
 }

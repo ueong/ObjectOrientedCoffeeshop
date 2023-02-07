@@ -5,16 +5,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class NotificationSpec {
+public class BellSpec {
     @Test
     public void 진동벨_알림을_하면_고객에게_알림이_간다() {
         // given
         NotifyTestCustomer customer = new NotifyTestCustomer();
-        Notification notification = new Notification(customer);
+        Bell bell = new Bell(customer);
         Clerk clerk = new Clerk();
 
         // when
-        notification.notifyCustomer(clerk);
+        bell.notifyCustomer(clerk);
 
         // then
         assertTrue(customer.isNotified);
@@ -26,7 +26,7 @@ public class NotificationSpec {
         public Clerk notifyClerk = null;
 
         @Override
-        public void notified(Clerk clerk) {
+        public void onDrinkReady(Clerk clerk) {
             isNotified = true;
             this.notifyClerk = clerk;
         }

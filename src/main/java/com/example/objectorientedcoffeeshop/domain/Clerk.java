@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Clerk {
-//    private final Map<Customer, Order> orders = new HashMap<>();
-    private final Map<Order, Notification> notifications = new HashMap<>();
+    private final Map<Order, Bell> bells = new HashMap<>();
     private final Map<Order, List<Drink>> madeDrinks = new HashMap<>();
     private final Barista barista;
 
@@ -17,20 +16,25 @@ public class Clerk {
         this.barista = barista;
     }
 
-    public Notification order(Customer customer) {
-//        this.orders.put(customer, customer.myOrder());
+    public Bell order(Customer customer) {
+        Bell bell = prepareBellFor(customer);
         barista.makeDrinkFor(customer.myOrder(), this);
-        final Notification notification = new Notification(customer);
-        notifications.put(customer.myOrder(), notification);
-        return notification;
+        return bell;
     }
 
-    public void take(List<Drink> drinks, Order order) {
-        madeDrinks.put(order, drinks);
-        notifications.get(order).notifyCustomer(this);
+    private Bell prepareBellFor(Customer customer) {
+        final Bell bell = new Bell(customer);
+        bells.put(customer.myOrder(), bell);
+        return bell;
     }
 
-    public List<Drink> deliverOrderedDrinks(Customer customer) {
+    public List<Drink> getDrinksFor(Customer customer) {
         return madeDrinks.get(customer.myOrder());
+    }
+
+    public void onCompleted(Order order) {
+        List<Drink> drinksForOrder = barista.getDrinkFor(order);
+        madeDrinks.put(order, drinksForOrder);
+        bells.get(order).notifyCustomer(this);
     }
 }
